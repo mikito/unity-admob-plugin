@@ -1,0 +1,7 @@
+*.DS_Store
+
+android/bin/*
+android/gen/*
+android/obj/*
+
+xcode/*

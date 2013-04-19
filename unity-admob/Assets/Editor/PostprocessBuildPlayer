@@ -1,0 +1,24 @@
+#!/usr/local/bin/macruby
+require 'rubygems'
+require 'xcodeproj'
+
+if ARGV[1] != "iPhone"
+  exit
+end
+
+projpath = ARGV[0] + "/Unity-iPhone.xcodeproj"
+proj = Xcodeproj::Project.new(projpath)
+messageUI = proj.add_system_framework("MessageUI")
+storeKit = proj.add_system_framework("StoreKit")
+adSupport = proj.add_system_framework("AdSupport")
+
+proj.targets.each do |target|
+  target.frameworks_build_phases.each do |build_phase|
+     build_phase.files << messageUI
+     build_phase.files << storeKit
+     build_phase.files << adSupport
+  end
+end
+
+proj.save_as(projpath)
+
