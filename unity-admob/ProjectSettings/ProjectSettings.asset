@@ -10,7 +10,7 @@ PlayerSettings:
   targetPlatform: 2
   targetResolution: 0
   accelerometerFrequency: 60
-  companyName: Mikito.Yoshiya@so-net.co.jp
+  companyName: Mikito Yoshiya
   productName: unity-admob
   AndroidLicensePublicKey: 
   defaultScreenWidth: 1024
@@ -59,7 +59,7 @@ PlayerSettings:
     16:9: 1
     Others: 1
   debugUnloadMode: 0
-  iPhoneBundleIdentifier: net.mikinya..admob
+  iPhoneBundleIdentifier: net.mikinya.admob
   iPhoneBundleVersion: 1.0
   AndroidBundleVersionCode: 1
   AndroidMinSdkVersion: 6
