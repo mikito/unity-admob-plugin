@@ -31,7 +31,7 @@ AdMobManager
  * Position
    * 広告表示位置
    * TOP or BOTTOM
-* ios / Android Test Device IDs
+ * ios / Android Test Device IDs
    * Device IDはXCodeやadb logcat等で起動時に確認できるはず
      * <Google> To get test ads on this device, call: request.testDevices = [NSArray arrayWithObjects:@"XXXXXXX", nil];
      * To get test ads on this device, call adRequest.addTestDevice("XXXXXXXXX");
