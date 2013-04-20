@@ -62,7 +62,7 @@ PlayerSettings:
   iPhoneBundleIdentifier: net.mikinya.admob
   iPhoneBundleVersion: 1.0
   AndroidBundleVersionCode: 1
-  AndroidMinSdkVersion: 6
+  AndroidMinSdkVersion: 8
   AndroidPreferredInstallLocation: 1
   aotOptions: 
   apiCompatibilityLevel: 2
