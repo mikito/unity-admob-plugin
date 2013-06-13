@@ -14,13 +14,15 @@ Unity AdMob Plugin
    * MessageUI.framework
    * StoreKit.framework
    * AdSupport.framework
+ * [iOSのみ] Linker Flag追加
+   * Build SettingsのOther Linker Flagsに「-ObjC」を追加
 
 XCode/フレームワーク自動追加
 ----------------
  * Macrubyをインストールする
    * http://macruby.org/
  * xcodeproj gemをインストールする(0.3.2で動作)
-   * macgem install xcodeproj
+   * gem install xcodeproj
  * PostprocessBuildPlayerによりUnityビルド後に自動的に追加される
  * これを使うとXCodeプロジェクトにAppendできなくなる弊害がある
 
