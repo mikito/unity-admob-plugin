@@ -1,5 +1,6 @@
 #import "AdViewController.h"
 #import "AdTransparentView.h"
+#import "UnityAppController.h"
 
 #define BANNER_REFRESH_RATE 30
 
@@ -28,21 +29,21 @@ static AdViewController *instance = nil;
     
     
     // Add AdView
-    UIWindow *window = [[UIApplication sharedApplication] keyWindow];
-    adViewController.view = [[[AdTransparentView alloc] initWithFrame:window.bounds] autorelease];
-    [window addSubview:adViewController.view];
+    UIView *rootView = ((UnityAppController*)[UIApplication sharedApplication].delegate).rootView;
+    adViewController.view = [[[AdTransparentView alloc] initWithFrame:rootView.bounds] autorelease];
+    [rootView addSubview:adViewController.view];
     
     // Determine Ad Position
     CGRect frame;
     CGSize adSize = [AdViewController determineAdSize];
     if (position == AdPositionTop) {
-        frame = CGRectMake((window.frame.size.width - adSize.width)/2,
+        frame = CGRectMake((rootView.bounds.size.width - adSize.width)/2,
                            0.0,
                            adSize.width,
                            adSize.height);
     }else if(position == AdPositionBottom){
-        frame = CGRectMake((window.frame.size.width - adSize.width)/2,
-                           window.frame.size.height -adSize.height,
+        frame = CGRectMake((rootView.bounds.size.width - adSize.width)/2,
+                           rootView.bounds.size.height - adSize.height,
                            adSize.width,
                            adSize.height);
     }
