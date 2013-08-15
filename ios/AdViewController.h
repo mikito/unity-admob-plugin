@@ -3,6 +3,7 @@
 @interface AdViewController : UIViewController  <GADBannerViewDelegate>{
     GADBannerView *bannerView;
     NSMutableArray *testDeviceIDs;
+    int position;
 }
 
 + (CGSize) determineAdSize;
@@ -11,8 +12,12 @@
 - (void) hideAd;
 - (void) showAd;
 - (void) refreshBanner;
-
-@property(nonatomic, retain) GADBannerView *bannerView;
+- (void) layoutAdView;
+- (void) willRotate:(NSNotification *)notification;
+- (void) didRotate:(NSNotification *)notification;
+    
+@property(nonatomic, strong) GADBannerView *bannerView;
+@property(assign) int position;
 
 enum _AdPosition{
     AdPositionTop ,
