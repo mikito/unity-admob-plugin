@@ -27,6 +27,10 @@ public class AdViewController implements AdListener{
 	class AdPosition{
 		final static int TOP = 0;
 		final static int BOTTOM = 1;
+		final static int TOP_LEFT = 2;
+		final static int TOP_RIGHT = 3;
+		final static int BOTTOM_LEFT = 4;
+		final static int BOTTOM_RIGHT = 5;
 	}
 	
 	public AdViewController(){
@@ -54,10 +58,25 @@ public class AdViewController implements AdListener{
 	
 	private void addAdView(){
 		LinearLayout layout = new LinearLayout(activity);
-		if(this.position == AdPosition.TOP){
+		switch(this.position){
+		case AdPosition.TOP:
 			layout.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.TOP);
-		}else if(this.position == AdPosition.BOTTOM){
+			break;
+		case AdPosition.BOTTOM:
 			layout.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.BOTTOM);
+			break;
+		case AdPosition.TOP_LEFT:
+			layout.setGravity(Gravity.TOP|Gravity.LEFT);
+			break;
+		case AdPosition.TOP_RIGHT:
+			layout.setGravity(Gravity.TOP|Gravity.RIGHT);
+			break;
+		case AdPosition.BOTTOM_LEFT:
+			layout.setGravity(Gravity.BOTTOM|Gravity.LEFT);
+			break;
+		case AdPosition.BOTTOM_RIGHT:
+			layout.setGravity(Gravity.BOTTOM|Gravity.RIGHT);
+			break;
 		}
 		activity.addContentView(layout, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 	    adView = new AdView(activity, AdSize.BANNER, adMobID);
