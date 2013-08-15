@@ -20,8 +20,12 @@
 @property(assign) int position;
 
 enum _AdPosition{
-    AdPositionTop ,
-    AdPositionBottom
+    AdPositionTop,
+    AdPositionBottom,
+    AdPositionTopRight,
+    AdPositionTopLeft,
+    AdPositionBottomRight,
+    AdPositionBottomLeft,
 };
 
 @end

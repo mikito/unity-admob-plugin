@@ -67,12 +67,31 @@ static AdViewController *instance = nil;
     CGRect frame;
     frame.size = adSize;
     
-    if (position == AdPositionTop) {
+    switch(position){
+    case AdPositionTop:
         frame.origin.x = (rootView.bounds.size.width - adSize.width) / 2;
         frame.origin.y = 0;
-    }else if(position == AdPositionBottom){
+        break;
+    case AdPositionBottom:
         frame.origin.x = (rootView.bounds.size.width - adSize.width) / 2;
         frame.origin.y = rootView.bounds.size.height - adSize.height;
+        break;
+    case AdPositionTopLeft:
+        frame.origin.x = 0;
+        frame.origin.y = 0;
+        break;
+    case AdPositionTopRight:
+        frame.origin.x = rootView.bounds.size.width - adSize.width;
+        frame.origin.y = 0;
+        break;
+    case AdPositionBottomLeft:
+        frame.origin.x = 0;
+        frame.origin.y = rootView.bounds.size.height - adSize.height;
+        break;
+    case AdPositionBottomRight:
+        frame.origin.x = rootView.bounds.size.width - adSize.width;
+        frame.origin.y = rootView.bounds.size.height - adSize.height;
+        break;
     }
     
     self.bannerView.frame = frame;
