@@ -92,7 +92,7 @@ public class AdMobManager : MonoBehaviour
 #if UNITY_IPHONE
             ipad = isIpadAdMob_();
 #endif
-            if (ipad)
+            if (ipad && iPadAdmobID != "")
             {
                 install(iPadAdmobID, position);
             }
