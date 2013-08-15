@@ -1,11 +1,13 @@
 #import "AdViewController.h"
 #import "AdTransparentView.h"
+#import "UnityAppController.h"
 
 #define BANNER_REFRESH_RATE 30
 
 @implementation AdViewController
 
-@synthesize bannerView = _bannerView;
+@synthesize bannerView;
+@synthesize position;
 
 static AdViewController *instance = nil;
 
@@ -26,36 +28,82 @@ static AdViewController *instance = nil;
     instance = adViewController;
     [instance addTestDeviceID:GAD_SIMULATOR_ID];
     
-    
     // Add AdView
-    UIWindow *window = [[UIApplication sharedApplication] keyWindow];
-    adViewController.view = [[[AdTransparentView alloc] initWithFrame:window.bounds] autorelease];
-    [window addSubview:adViewController.view];
-    
-    // Determine Ad Position
-    CGRect frame;
-    CGSize adSize = [AdViewController determineAdSize];
-    if (position == AdPositionTop) {
-        frame = CGRectMake((window.frame.size.width - adSize.width)/2,
-                           0.0,
-                           adSize.width,
-                           adSize.height);
-    }else if(position == AdPositionBottom){
-        frame = CGRectMake((window.frame.size.width - adSize.width)/2,
-                           window.frame.size.height -adSize.height,
-                           adSize.width,
-                           adSize.height);
-    }
+    adViewController.view = [[[AdTransparentView alloc] init] autorelease];
+    adViewController.position = position;
+    UIView *rootView = ((UnityAppController*)[UIApplication sharedApplication].delegate).rootView;
+    [rootView addSubview:adViewController.view];
     
     // Init Admob
-    GADBannerView *bannerView = [[GADBannerView alloc] initWithFrame:frame];
+    GADBannerView *bannerView = [[GADBannerView alloc] init];
+    adViewController.bannerView = bannerView;
+    [adViewController.view addSubview:bannerView];
+
+    [adViewController layoutAdView];
+    
     bannerView.adUnitID = adMobID;
     bannerView.rootViewController = adViewController;
     bannerView.delegate = adViewController;
-    adViewController.bannerView = bannerView;
-    [adViewController.view addSubview:bannerView];
+    
+    // Rotate Notification
+    [[NSNotificationCenter defaultCenter] addObserver:instance
+                                             selector:@selector(willRotate:)
+                                                 name:@"kUnityViewWillRotate"
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:instance
+                                             selector:@selector(didRotate:)
+                                                 name:@"kUnityViewDidRotate"
+                                               object:nil];
     
     NSLog(@"Install AdMob");
+}
+
+- (void)layoutAdView{
+    UIView *rootView = ((UnityAppController*)[UIApplication sharedApplication].delegate).rootView;
+    self.view.frame = rootView.bounds;
+    
+    // Determine Ad Position
+    CGSize adSize = [AdViewController determineAdSize];
+    CGRect frame;
+    frame.size = adSize;
+    
+    switch(position){
+    case AdPositionTop:
+        frame.origin.x = (rootView.bounds.size.width - adSize.width) / 2;
+        frame.origin.y = 0;
+        break;
+    case AdPositionBottom:
+        frame.origin.x = (rootView.bounds.size.width - adSize.width) / 2;
+        frame.origin.y = rootView.bounds.size.height - adSize.height;
+        break;
+    case AdPositionTopLeft:
+        frame.origin.x = 0;
+        frame.origin.y = 0;
+        break;
+    case AdPositionTopRight:
+        frame.origin.x = rootView.bounds.size.width - adSize.width;
+        frame.origin.y = 0;
+        break;
+    case AdPositionBottomLeft:
+        frame.origin.x = 0;
+        frame.origin.y = rootView.bounds.size.height - adSize.height;
+        break;
+    case AdPositionBottomRight:
+        frame.origin.x = rootView.bounds.size.width - adSize.width;
+        frame.origin.y = rootView.bounds.size.height - adSize.height;
+        break;
+    }
+    
+    self.bannerView.frame = frame;
+}
+
+- (void)willRotate:(NSNotification *)notification{
+    [self hideAd];
+}
+
+- (void)didRotate:(NSNotification *)notification{
+    [self layoutAdView];
+    [self showAd];
 }
 
 - (id)init {
@@ -91,6 +139,7 @@ static AdViewController *instance = nil;
 }
 
 - (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     self.view = nil;
     self.bannerView.delegate = nil;
     [self.bannerView release];
