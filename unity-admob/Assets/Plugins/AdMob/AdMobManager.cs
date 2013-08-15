@@ -6,7 +6,11 @@ public class AdMobManager : MonoBehaviour
     public enum Position
     {
         TOP,
-        BOTTOM
+        BOTTOM,
+        TOP_LEFT,
+        TOP_RIGHT,
+        BOTTOM_LEFT,
+        BOTTOM_RIGHT
     }
 
     private static AdMobManager mInstance = null;

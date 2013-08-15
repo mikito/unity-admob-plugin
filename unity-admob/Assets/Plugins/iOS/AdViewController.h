@@ -22,10 +22,10 @@
 enum _AdPosition{
     AdPositionTop,
     AdPositionBottom,
-    AdPositionTopRight,
     AdPositionTopLeft,
-    AdPositionBottomRight,
+    AdPositionTopRight,
     AdPositionBottomLeft,
+    AdPositionBottomRight
 };
 
 @end
