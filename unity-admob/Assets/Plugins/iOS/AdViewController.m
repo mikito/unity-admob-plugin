@@ -1,6 +1,6 @@
 #import "AdViewController.h"
 #import "AdTransparentView.h"
-#import "UnityAppController.h"
+#import "UnityGLViewGetter.h"
 
 #define BANNER_REFRESH_RATE 30
 
@@ -31,7 +31,7 @@ static AdViewController *instance = nil;
     // Add AdView
     adViewController.view = [[[AdTransparentView alloc] init] autorelease];
     adViewController.position = position;
-    UIView *rootView = ((UnityAppController*)[UIApplication sharedApplication].delegate).rootView;
+    UIView *rootView = [[UnityGLViewGetter viewController] view];
     [rootView addSubview:adViewController.view];
     
     // Init Admob
@@ -59,7 +59,7 @@ static AdViewController *instance = nil;
 }
 
 - (void)layoutAdView{
-    UIView *rootView = ((UnityAppController*)[UIApplication sharedApplication].delegate).rootView;
+    UIView *rootView = [[UnityGLViewGetter viewController] view];
     self.view.frame = rootView.bounds;
     
     // Determine Ad Position
