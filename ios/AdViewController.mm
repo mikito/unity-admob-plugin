@@ -9,6 +9,7 @@
 @synthesize bannerView;
 @synthesize position;
 
+
 static AdViewController *instance = nil;
 
 + (CGSize) determineAdSize{
@@ -28,82 +29,76 @@ static AdViewController *instance = nil;
     instance = adViewController;
     [instance addTestDeviceID:GAD_SIMULATOR_ID];
     
-    // Add AdView
+    // Unity View
+    UIViewController *rootViewController = GetAppController().rootViewController;
+    UIView *rootView = GetAppController().rootView;
+    
+    // Add Ad Base View
     adViewController.view = [[[AdTransparentView alloc] init] autorelease];
     adViewController.position = position;
-    UIView *rootView = ((UnityAppController*)[UIApplication sharedApplication].delegate).rootView;
+    adViewController.view.frame = rootView.bounds;
+    adViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [rootView addSubview:adViewController.view];
     
     // Init Admob
     GADBannerView *bannerView = [[GADBannerView alloc] init];
-    adViewController.bannerView = bannerView;
-    [adViewController.view addSubview:bannerView];
-
-    [adViewController layoutAdView];
-    
     bannerView.adUnitID = adMobID;
-    bannerView.rootViewController = adViewController;
+    bannerView.rootViewController = rootViewController;
     bannerView.delegate = adViewController;
-    
-    // Rotate Notification
-    [[NSNotificationCenter defaultCenter] addObserver:instance
-                                             selector:@selector(willRotate:)
-                                                 name:@"kUnityViewWillRotate"
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:instance
-                                             selector:@selector(didRotate:)
-                                                 name:@"kUnityViewDidRotate"
-                                               object:nil];
+   
+    // Add AdView
+    adViewController.bannerView = bannerView;
+    [adViewController layoutAdView];
+    [adViewController.view addSubview:bannerView];
     
     NSLog(@"Install AdMob");
 }
 
 - (void)layoutAdView{
-    UIView *rootView = ((UnityAppController*)[UIApplication sharedApplication].delegate).rootView;
-    self.view.frame = rootView.bounds;
-    
-    // Determine Ad Position
+    CGRect rootBounds = self.view.bounds;
     CGSize adSize = [AdViewController determineAdSize];
     CGRect frame;
+    int autoresizingMask = 0;
+    
     frame.size = adSize;
     
-    switch(position){
-    case AdPositionTop:
-        frame.origin.x = (rootView.bounds.size.width - adSize.width) / 2;
-        frame.origin.y = 0;
-        break;
-    case AdPositionBottom:
-        frame.origin.x = (rootView.bounds.size.width - adSize.width) / 2;
-        frame.origin.y = rootView.bounds.size.height - adSize.height;
-        break;
-    case AdPositionTopLeft:
-        frame.origin.x = 0;
-        frame.origin.y = 0;
-        break;
-    case AdPositionTopRight:
-        frame.origin.x = rootView.bounds.size.width - adSize.width;
-        frame.origin.y = 0;
-        break;
-    case AdPositionBottomLeft:
-        frame.origin.x = 0;
-        frame.origin.y = rootView.bounds.size.height - adSize.height;
-        break;
-    case AdPositionBottomRight:
-        frame.origin.x = rootView.bounds.size.width - adSize.width;
-        frame.origin.y = rootView.bounds.size.height - adSize.height;
-        break;
+    // x layout
+    switch (position) {
+        case AdPositionTop:
+        case AdPositionBottom:
+            frame.origin.x = (rootBounds.size.width - adSize.width) / 2;
+            autoresizingMask += UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
+            break;
+        case AdPositionTopLeft:
+        case AdPositionBottomLeft:
+            frame.origin.x = 0;
+            autoresizingMask += UIViewAutoresizingFlexibleRightMargin;
+            break;
+        case AdPositionTopRight:
+        case AdPositionBottomRight:
+            frame.origin.x = 0;
+            autoresizingMask += UIViewAutoresizingFlexibleLeftMargin;
+            break;
     }
     
-    self.bannerView.frame = frame;
-}
-
-- (void)willRotate:(NSNotification *)notification{
-    [self hideAd];
-}
-
-- (void)didRotate:(NSNotification *)notification{
-    [self layoutAdView];
-    [self showAd];
+    // y layout
+    switch (position) {
+        case AdPositionTop:
+        case AdPositionTopLeft:
+        case AdPositionTopRight:
+            frame.origin.y = 0;
+            autoresizingMask += UIViewAutoresizingFlexibleBottomMargin;
+            break;
+        case AdPositionBottom:
+        case AdPositionBottomLeft:
+        case AdPositionBottomRight:
+            frame.origin.y = rootBounds.size.height - adSize.height;
+            autoresizingMask += UIViewAutoresizingFlexibleTopMargin;
+            break;
+    }
+   
+    bannerView.frame = frame;
+    bannerView.autoresizingMask = autoresizingMask;
 }
 
 - (id)init {
@@ -139,7 +134,6 @@ static AdViewController *instance = nil;
 }
 
 - (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
     self.view = nil;
     self.bannerView.delegate = nil;
     [self.bannerView release];
@@ -149,6 +143,16 @@ static AdViewController *instance = nil;
 }
 
 @end
+
+extern "C" {
+    void installAdMobIOS_(char *adMobID, int position);
+    void addTestDeviceIDIOS_(char *deviceID);
+    void hideAdIOS_();
+    void showAdIOS_();
+    void refreshAdIOS_();
+    void releaseAdMobIOS_();
+    bool isIpadAdMob_();
+}
 
 void installAdMobIOS_(char *adMobID, int position){
     [AdViewController installAdMob:
