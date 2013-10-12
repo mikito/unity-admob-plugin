@@ -1,8 +1,10 @@
 #import "AdViewController.h"
 #import "AdTransparentView.h"
-#import "UnityAppController.h"
 
 #define BANNER_REFRESH_RATE 30
+
+extern UIViewController* UnityGetGLViewController();
+extern UIView* UnityGetGLView();
 
 @implementation AdViewController
 
@@ -30,8 +32,8 @@ static AdViewController *instance = nil;
     [instance addTestDeviceID:GAD_SIMULATOR_ID];
     
     // Unity View
-    UIViewController *rootViewController = GetAppController().rootViewController;
-    UIView *rootView = GetAppController().rootView;
+    UIViewController *rootViewController = UnityGetGLViewController();
+    UIView *rootView = UnityGetGLView();
     
     // Add Ad Base View
     adViewController.view = [[[AdTransparentView alloc] init] autorelease];
