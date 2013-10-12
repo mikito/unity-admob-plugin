@@ -5,7 +5,7 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 3
+  serializedVersion: 4
   m_Component:
   - 4: {fileID: 400000}
   - 114: {fileID: 11400000}
@@ -15,7 +15,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &400000
 Transform:
   m_ObjectHideFlags: 1
@@ -35,9 +35,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6287410423d574596ba0d626147dfd85, type: 1}
+  m_Script: {fileID: 11500000, guid: 6287410423d574596ba0d626147dfd85, type: 3}
   m_Name: 
-  iPhoneAdmobID: a14f5d7ef8adc51
+  m_EditorClassIdentifier: 
+  iPhoneAdmobID: ca-app-pub-2863685977111020/8569264994
   iPadAdmobID: 
   androidAdmobID: 
   position: 1
