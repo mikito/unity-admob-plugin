@@ -17,7 +17,7 @@ Unity AdMob Plugin
  * [iOSのみ] Linker Flag追加
    * Build SettingsのOther Linker Flagsに「-ObjC」を追加
 
-Xcode/フレームワーク自動追加（うまく動かないっぽい）
+Xcode/フレームワーク自動追加
 ----------------
  * PostprocessBuildPlayerによりUnityビルド後に自動的にXcodeの設定を行う
  * 準備
@@ -31,6 +31,7 @@ Xcode/フレームワーク自動追加（うまく動かないっぽい）
 AdMobManager
 ------------------
  * AdMob ID
+   * 広告ユニットIDを入れる
    * いちおうUniversalなアプリでiPhoneとiPadのIDを切り分けられる
    * iPad切り分ける必要なかったらiPhoneのみ設定
  * Position
@@ -52,7 +53,7 @@ AdMobManager
  * 広告取得に失敗したら一定間隔後に自動で再取得を試みる
  * Auto Rotation対応
  * AdMob SDK Version
-   * iOS : 6.5.0
+   * iOS : 6.5.1
    * Android : 6.4.1
 
 
