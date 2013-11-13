@@ -21,12 +21,9 @@ Xcode/フレームワーク自動追加
 ----------------
  * PostprocessBuildPlayerによりUnityビルド後に自動的にXcodeの設定を行う
  * 準備
-   * Macrubyをインストールする
-     * http://macruby.org/
-   * xcodeproj gemをインストールする(0.3.2で動作)
-     * gem install xcodeproj
- * これを使うとXcodeプロジェクトにAppendできなくなる弊害がある
- * Linker Flagの自動追加もしたいが
+   * xcodeproj gemをインストールする(0.14.0で動作)
+     * sudo gem install xcodeproj
+ * rvmを使用している場合はrvm use systemしてからインストールしてください...
 
 AdMobManager
 ------------------
@@ -53,7 +50,5 @@ AdMobManager
  * 広告取得に失敗したら一定間隔後に自動で再取得を試みる
  * Auto Rotation対応
  * AdMob SDK Version
-   * iOS : 6.5.1
+   * iOS : 6.6.0
    * Android : 6.4.1
-
-
