@@ -15,13 +15,16 @@ projpath = ARGV[0] + "/Unity-iPhone.xcodeproj"
 proj = Xcodeproj::Project.open(projpath)
 
 proj.targets.each do |target|
+  next unless target.name == "Unity-iPhone"
+
   # Add Frameworks
   target.add_system_framework("MessageUI")
   target.add_system_framework("StoreKit")
   target.add_system_framework("AdSupport")
+  target.add_system_framework("CoreTelephony")
 
   # Add Other Linker Flags
-  target.build_settings("Debug")["OTHER_LDFLAGS"] << "-ObjC"
+   target.build_settings("Debug")["OTHER_LDFLAGS"] << "-ObjC"
   target.build_settings("Release")["OTHER_LDFLAGS"] << "-ObjC"
 end
 
