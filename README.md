@@ -51,4 +51,4 @@ AdMobManager
  * Auto Rotation対応
  * AdMob SDK Version
    * iOS : 6.6.0
-   * Android : 6.4.1
+   * Android (Google Play Services) : 4.4 (4452000)
