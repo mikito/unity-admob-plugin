@@ -78,6 +78,8 @@ public class AdMobManager : MonoBehaviour
         {
             releaseAdMobIOS_();
         }
+#elif UNITY_ANDROID
+        adViewController.Call("onDestroy");
 #endif
     }
 
@@ -115,10 +117,14 @@ public class AdMobManager : MonoBehaviour
         {
 #if UNITY_ANDROID
             adViewController.Call("cancelRefreshTimer");
+            adViewController.Call("onPause");
 #endif
         }
         else
         {
+#if UNITY_ANDROID
+            adViewController.Call("onResume");
+#endif
             refresh();
         }
     }
