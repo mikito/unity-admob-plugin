@@ -132,7 +132,35 @@ public class AdViewController extends AdListener{
 		}
 	}
 	
-	// Admob Event Listener
+	// Life Cycle
+	public void onPause() {
+		handler.post(new Runnable(){
+			@Override
+			public void run(){
+				adView.pause();
+			}
+		});
+	}
+
+	public void onResume() {
+		handler.post(new Runnable(){
+			@Override
+			public void run(){
+				  adView.resume();
+			}
+		});
+	}
+
+	public void onDestroy() {
+		handler.post(new Runnable(){
+			@Override
+			public void run(){
+				  adView.destroy();
+			}
+		});
+	}
+
+	// AdMob Event Listener
     public void onAdClosed() {}
     
     public void onAdFailedToLoad(int errorCode) {
