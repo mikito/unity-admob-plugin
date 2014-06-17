@@ -78,6 +78,8 @@ public class AdMobManager : MonoBehaviour
         {
             releaseAdMobIOS_();
         }
+#elif UNITY_ANDROID
+        adViewController.Call("onDestroy");
 #endif
     }
 
@@ -115,10 +117,14 @@ public class AdMobManager : MonoBehaviour
         {
 #if UNITY_ANDROID
             adViewController.Call("cancelRefreshTimer");
+            adViewController.Call("onPause");
 #endif
         }
         else
         {
+#if UNITY_ANDROID
+            adViewController.Call("onResume");
+#endif
             refresh();
         }
     }
@@ -145,6 +151,8 @@ public class AdMobManager : MonoBehaviour
 
     public void refresh()
     {
+        if (Application.isEditor) return;
+
 #if UNITY_IPHONE
         refreshAdIOS_();
 #elif UNITY_ANDROID
@@ -154,6 +162,8 @@ public class AdMobManager : MonoBehaviour
 
     public void hide()
     {
+        if (Application.isEditor) return;
+
 #if UNITY_IPHONE
         hideAdIOS_();
 #elif UNITY_ANDROID
@@ -163,6 +173,8 @@ public class AdMobManager : MonoBehaviour
 
     public void show()
     {
+        if (Application.isEditor) return;
+
 #if UNITY_IPHONE
         showAdIOS_();
 #elif UNITY_ANDROID

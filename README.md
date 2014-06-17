@@ -14,6 +14,7 @@ Unity AdMob Plugin
    * MessageUI.framework
    * StoreKit.framework
    * AdSupport.framework
+   * CoreTelephony.framework
  * [iOSのみ] Linker Flag追加
    * Build SettingsのOther Linker Flagsに「-ObjC」を追加
 
@@ -47,8 +48,9 @@ AdMobManager
 
 備考
 -----
+ * 旧AdMobSDKを使用している場合はGoogleAdMobAdsSdk-x.x.x.jarを削除してください
  * 広告取得に失敗したら一定間隔後に自動で再取得を試みる
  * Auto Rotation対応
  * AdMob SDK Version
-   * iOS : 6.6.0
-   * Android : 6.4.1
+   * iOS : 6.9.2
+   * Android (Google Play Services) : 4.4 (4452000)
