@@ -151,6 +151,8 @@ public class AdMobManager : MonoBehaviour
 
     public void refresh()
     {
+        if (Application.isEditor) return;
+
 #if UNITY_IPHONE
         refreshAdIOS_();
 #elif UNITY_ANDROID
@@ -160,6 +162,8 @@ public class AdMobManager : MonoBehaviour
 
     public void hide()
     {
+        if (Application.isEditor) return;
+
 #if UNITY_IPHONE
         hideAdIOS_();
 #elif UNITY_ANDROID
@@ -169,6 +173,8 @@ public class AdMobManager : MonoBehaviour
 
     public void show()
     {
+        if (Application.isEditor) return;
+
 #if UNITY_IPHONE
         showAdIOS_();
 #elif UNITY_ANDROID
