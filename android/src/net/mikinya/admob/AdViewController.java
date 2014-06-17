@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.Gravity;
 import android.view.ViewGroup.LayoutParams;
 import com.unity3d.player.UnityPlayer;
-//import com.google.ads.*;
 import com.google.android.gms.ads.*;
 
 public class AdViewController extends AdListener{
@@ -22,6 +21,7 @@ public class AdViewController extends AdListener{
 	private AdView adView;
 	private Timer timer;
 	private ArrayList<String> testDevices;
+	private LinearLayout layout;
 	public String adMobID;
 	public int position;
 	
@@ -58,7 +58,7 @@ public class AdViewController extends AdListener{
 	}
 	
 	private void addAdView(){
-		LinearLayout layout = new LinearLayout(activity);
+		layout = new LinearLayout(activity);
 		switch(this.position){
 		case AdPosition.TOP:
 			layout.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.TOP);
@@ -80,14 +80,12 @@ public class AdViewController extends AdListener{
 			break;
 		}
 		activity.addContentView(layout, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-	    //adView = new AdView(activity, AdSize.BANNER, adMobID);
-	    //adView.setAdListener(this);
-	    
+
 	    adView = new AdView(activity);
 	    adView.setAdUnitId(adMobID);
 	    adView.setAdSize(AdSize.BANNER);
 	    adView.setAdListener(this);
-	    
+		adView.setVisibility(View.GONE);  
 	    layout.addView(adView); 
 	}
 	
@@ -95,7 +93,7 @@ public class AdViewController extends AdListener{
 		handler.post(new Runnable(){
 	        @Override
 	        public void run(){
-	        	adView.setVisibility(View.GONE);
+	        	layout.setVisibility(View.GONE);
 	        }
 		});
 	}
@@ -104,7 +102,7 @@ public class AdViewController extends AdListener{
 		handler.post(new Runnable(){
 	        @Override
 	        public void run(){
-	        	adView.setVisibility(View.VISIBLE);
+	        	layout.setVisibility(View.VISIBLE);
 	        }
 		});
 	}
@@ -114,10 +112,6 @@ public class AdViewController extends AdListener{
 		handler.post(new Runnable(){
 			@Override
 			public void run(){
-				//AdRequest request = new AdRequest();
-				//for(String device_id : testDevices) {
-				//	request.addTestDevice(device_id);
-				//}
 				AdRequest.Builder builder = new AdRequest.Builder();
 				
 				builder.addTestDevice(AdRequest.DEVICE_ID_EMULATOR);
@@ -139,10 +133,8 @@ public class AdViewController extends AdListener{
 	}
 	
 	// Admob Event Listener
-    //public void onDismissScreen(Ad ad){}
     public void onAdClosed() {}
     
-    //public void onFailedToReceiveAd(Ad ad, AdRequest.ErrorCode error) {
     public void onAdFailedToLoad(int errorCode) {
         if(timer != null) return;
         
@@ -156,12 +148,12 @@ public class AdViewController extends AdListener{
         
         timer.schedule(mTask, BANNER_REFRESH_RATE);
     }
-	//public void onLeaveApplication(Ad ad){}
+
 	public void onAdLeftApplication() {}
 	
-	//public void onPresentScreen(Ad ad){}
 	public void onAdOpened() {}
 	
-	//public void onReceiveAd(Ad ad){}
-	public void onAdLoaded(){}
+	public void onAdLoaded(){
+		adView.setVisibility(View.VISIBLE);
+	}
 }
