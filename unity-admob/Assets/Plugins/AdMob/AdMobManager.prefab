@@ -41,12 +41,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   iPhoneAdmobID: ca-app-pub-2863685977111020/4275400997
   iPadAdmobID: 
-  androidAdmobID: 
+  androidAdmobID: ca-app-pub-2863685977111020/8727450192
   position: 1
   iosTestDeviceIDs:
   - e75dd4817a921603a71af28e8ceb541d
-  androidTestDeviceIDs: []
+  androidTestDeviceIDs:
+  - 381037B37E86BE57128768F855C76BE7
   iosInterstitialUnitID: ca-app-pub-2863685977111020/5752134191
+  androidInterstitialUnitID: ca-app-pub-2863685977111020/1204183393
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
