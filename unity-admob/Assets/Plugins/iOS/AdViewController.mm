@@ -33,10 +33,11 @@ static AdViewController *instance = nil;
     
     // Unity View
     UIViewController *rootViewController = UnityGetGLViewController();
-    UIView *rootView = UnityGetGLView();
+    UIView *rootView = UnityGetMainWindow();//UnityGetGLView();
     
     // Add Ad Base View
     adViewController.view = [[[AdTransparentView alloc] init] autorelease];
+    
     adViewController.position = position;
     adViewController.view.frame = rootView.bounds;
     adViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;

@@ -27,6 +27,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
+  m_RootOrder: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38,13 +39,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6287410423d574596ba0d626147dfd85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iPhoneAdmobID: ca-app-pub-2863685977111020/8569264994
+  iPhoneAdmobID: ca-app-pub-2863685977111020/4275400997
   iPadAdmobID: 
   androidAdmobID: 
   position: 1
   iosTestDeviceIDs:
-  - 147a68f93e4bf911d1775c2795c4882e
+  - e75dd4817a921603a71af28e8ceb541d
   androidTestDeviceIDs: []
+  iosInterstitialUnitID: ca-app-pub-2863685977111020/5752134191
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
