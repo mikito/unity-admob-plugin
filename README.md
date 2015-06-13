@@ -3,30 +3,13 @@ Unity AdMob Plugin
 
 概要
 ---------------
- * UnityのiPhone, iPad, AndroidでAdMobを表示
+ * Unity5にてiPhone, iPad, AndroidでAdMobを表示
 
 使い方
 -------
  * 広告の表示
    * AdMobManagerプレファブをシーンに追加
    * プレファブにAdMobのIDや表示位置などを設定
- * [iOSのみ] Xcodeにフレームワークの追加
-   * MessageUI.framework
-   * StoreKit.framework
-   * AdSupport.framework
-   * CoreTelephony.framework
-   * EventKit.frameWork
-   * EventKitUI.frameWork
- * [iOSのみ] Linker Flag追加
-   * Build SettingsのOther Linker Flagsに「-ObjC」を追加
-
-Xcode/フレームワーク自動追加
-----------------
- * PostprocessBuildPlayerによりUnityビルド後に自動的にXcodeの設定を行う
- * 準備
-   * xcodeproj gemをインストールする(0.14.0で動作)
-     * sudo gem install xcodeproj
- * rvmを使用している場合はrvm use systemしてからインストールしてください...
 
 AdMobManager
 ------------------
@@ -54,5 +37,5 @@ AdMobManager
  * 広告取得に失敗したら一定間隔後に自動で再取得を試みる
  * Auto Rotation対応
  * AdMob SDK Version
-   * iOS : 6.12.0
+   * iOS : 7.3.1
    * Android (Google Play Services) : 4.4 (4452000)
