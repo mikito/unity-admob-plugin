@@ -37,5 +37,5 @@ AdMobManager
  * 広告取得に失敗したら一定間隔後に自動で再取得を試みる
  * Auto Rotation対応
  * AdMob SDK Version
-   * iOS : 7.3.1
-   * Android (Google Play Services) : 4.4 (4452000)
+   * iOS : v7.3.1
+   * Android (Google Play Services) : Rev.25 (7571000)
