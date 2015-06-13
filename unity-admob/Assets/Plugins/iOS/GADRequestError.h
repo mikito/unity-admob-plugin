@@ -1,6 +1,6 @@
 //
 //  GADRequestError.h
-//  Google AdMob Ads SDK
+//  Google Mobile Ads SDK
 //
 //  Copyright 2011 Google Inc. All rights reserved.
 //
@@ -49,7 +49,16 @@ typedef NS_ENUM(NSInteger, GADErrorCode) {
   kGADErrorMediationNoFill,
 
   /// Attempting to pass an invalid ad size to an adapter.
-  kGADErrorMediationInvalidAdSize
+  kGADErrorMediationInvalidAdSize,
+
+  /// Internal error.
+  kGADErrorInternalError,
+
+  /// Invalid argument error.
+  kGADErrorInvalidArgument,
+
+  /// Received invalid response.
+  kGADErrorReceivedInvalidResponse
 };
 
 /// Represents the error generated due to invalid request parameters.

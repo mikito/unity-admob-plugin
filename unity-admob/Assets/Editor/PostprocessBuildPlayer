@@ -22,9 +22,11 @@ proj.targets.each do |target|
   target.add_system_framework("StoreKit")
   target.add_system_framework("AdSupport")
   target.add_system_framework("CoreTelephony")
+  target.add_system_framework("EventKit")
+  target.add_system_framework("EventKitUI")
 
   # Add Other Linker Flags
-   target.build_settings("Debug")["OTHER_LDFLAGS"] << "-ObjC"
+  target.build_settings("Debug")["OTHER_LDFLAGS"] << "-ObjC"
   target.build_settings("Release")["OTHER_LDFLAGS"] << "-ObjC"
 end
 

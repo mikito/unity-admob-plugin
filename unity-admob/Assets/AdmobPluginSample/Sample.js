@@ -11,4 +11,7 @@ function OnGUI(){
 	if(GUI.Button(Rect(0, (current++) * 100, Screen.width, 100), "Refresh Ad")){
 		AdMobManager.instance.refresh();
 	}
+	if(GUI.Button(Rect(0, (current++) * 100, Screen.width, 100), "Show Interstitial")){
+		AdMobManager.instance.showInterstitial();
+	}
 }

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Runtime.InteropServices;
+using System;
 
 public class AdMobManager : MonoBehaviour
 {
@@ -27,6 +28,10 @@ public class AdMobManager : MonoBehaviour
     private string[] iosTestDeviceIDs;
     [SerializeField]
     private string[] androidTestDeviceIDs;
+    [SerializeField]
+    private string iosInterstitialUnitID;
+    [SerializeField]
+    private string androidInterstitialUnitID;
 
 
 #if UNITY_IPHONE
@@ -44,8 +49,20 @@ public class AdMobManager : MonoBehaviour
     private static extern void releaseAdMobIOS_();
     [DllImport("__Internal")]
     private static extern bool isIpadAdMob_();
+
+    [DllImport("__Internal")]
+    private static extern IntPtr adMobInterstitialInit(string managerName);
+    [DllImport("__Internal")]
+    private static extern void adMobInterstitialAddTestDevice(IntPtr instance, string deviceID);
+    [DllImport("__Internal")]
+    private static extern void adMobInterstitialShow(IntPtr instance, string unitID);
+    [DllImport("__Internal")]
+    private static extern void adMobInterstitialRelease(IntPtr instance);
+
+    IntPtr interstitialBanner; 
 #elif UNITY_ANDROID
     private AndroidJavaObject adViewController = null;
+    private AndroidJavaObject interstitialBanner = null;
 #endif
 
     public static AdMobManager instance
@@ -73,14 +90,15 @@ public class AdMobManager : MonoBehaviour
     {
         if (Application.isEditor) return;
 
-#if UNITY_IPHONE
         if (mInstance == this)
         {
+#if UNITY_IPHONE
             releaseAdMobIOS_();
-        }
+            if (interstitialBanner != IntPtr.Zero) adMobInterstitialRelease(interstitialBanner);
 #elif UNITY_ANDROID
-        adViewController.Call("onDestroy");
+            adViewController.Call("onDestroy");
 #endif
+        }
     }
 
     public void Start()
@@ -180,5 +198,44 @@ public class AdMobManager : MonoBehaviour
 #elif UNITY_ANDROID
         adViewController.Call("showAd");
 #endif
+    }
+
+    public void showInterstitial()
+    {
+        if (Application.isEditor) return;
+
+#if UNITY_IPHONE
+        if (interstitialBanner != IntPtr.Zero) return;
+
+        interstitialBanner = adMobInterstitialInit(gameObject.name);
+        foreach (string deviceID in iosTestDeviceIDs)
+        {
+            adMobInterstitialAddTestDevice(interstitialBanner, deviceID);
+        }
+        adMobInterstitialShow(interstitialBanner, iosInterstitialUnitID);
+
+#elif UNITY_ANDROID
+        if (interstitialBanner != null) return;
+
+        interstitialBanner = new AndroidJavaObject("net.mikinya.admob.AdInterstitialViewController", gameObject.name);
+        foreach (string deviceID in androidTestDeviceIDs)
+        {
+            interstitialBanner.Call("addTestDevice", deviceID);
+        }
+        interstitialBanner.Call("show", androidInterstitialUnitID);
+#endif
+    }
+
+    // Message from AdInterstitialViewController
+    void DidInterstitialFinish()
+    {
+        Debug.Log("on finish");
+#if UNITY_IPHONE
+        adMobInterstitialRelease(interstitialBanner);
+        interstitialBanner = IntPtr.Zero;
+#elif UNITY_ANDROID
+        interstitialBanner.Dispose();
+        interstitialBanner = null;
+#endif        
     }
 }
